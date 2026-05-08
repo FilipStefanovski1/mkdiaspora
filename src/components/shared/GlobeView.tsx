@@ -7,6 +7,61 @@ import { Badge } from '@/components/ui/Badge'
 import { formatNumber } from '@/lib/utils'
 import type { Hub } from '@/types'
 
+// ─── GlobeBackground — cinematic, no interactions ────────────────────────────
+
+interface GlobeBackgroundProps {
+  hubs: Hub[]
+  height?: number
+}
+
+export function GlobeBackground({ hubs, height = 600 }: GlobeBackgroundProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(800)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0]
+      if (entry) setWidth(entry.contentRect.width)
+    })
+    observer.observe(el)
+    setWidth(el.clientWidth)
+    return () => observer.disconnect()
+  }, [])
+
+  const pins = hubs.map((h) => ({
+    lat: h.lat,
+    lng: h.lng,
+    size: Math.min(0.55, 0.15 + h.memberCount / 550),
+    color: h.isActive ? '#e74c3c' : '#3a3a50',
+  }))
+
+  return (
+    <div ref={containerRef} className="w-full h-full">
+      <Globe
+        width={width}
+        height={height}
+        backgroundColor="rgba(0,0,0,0)"
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+        showAtmosphere
+        atmosphereColor="#c0392b"
+        atmosphereAltitude={0.15}
+        pointsData={pins}
+        pointLat="lat"
+        pointLng="lng"
+        pointAltitude="size"
+        pointColor="color"
+        pointRadius={0.4}
+        pointsMerge={false}
+        enablePointerInteraction={false}
+        animateIn
+      />
+    </div>
+  )
+}
+
 interface GlobePoint {
   lat: number
   lng: number

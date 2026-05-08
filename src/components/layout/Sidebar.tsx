@@ -16,7 +16,7 @@ import { Avatar } from '@/components/ui/Avatar'
 import { TierBadge } from '@/components/ui/TierBadge'
 
 const NAV_ITEMS = [
-  { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/home', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/explore', icon: Globe, label: 'Explore' },
   { to: '/hubs', icon: MapPin, label: 'Hubs' },
   { to: '/intros', icon: Handshake, label: 'Introductions' },

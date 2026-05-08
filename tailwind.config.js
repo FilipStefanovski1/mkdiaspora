@@ -53,6 +53,12 @@ export default {
           'BlinkMacSystemFont',
           'sans-serif',
         ],
+        editorial: [
+          'Playfair Display',
+          'Georgia',
+          'Cambria',
+          'serif',
+        ],
       },
       fontSize: {
         '2xs': ['0.625rem', { lineHeight: '0.875rem' }],
