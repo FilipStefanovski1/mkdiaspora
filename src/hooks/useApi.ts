@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import type { DependencyList } from 'react'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
@@ -10,10 +11,13 @@ export interface UseApiResult<T> {
 }
 
 /**
- * Generic data-fetching hook. Store `fetcher` in a ref so callers don't
- * need to memoize it — only the `trigger` counter drives re-fetches.
+ * Generic data-fetching hook.
+ *
+ * - `fetcher` is stored in a ref so callers don't need to memoize it.
+ * - Pass `deps` when the fetcher depends on route params or external state.
+ *   Changing a dep triggers a fresh fetch (same semantics as useEffect deps).
  */
-export function useApi<T>(fetcher: () => Promise<T>): UseApiResult<T> {
+export function useApi<T>(fetcher: () => Promise<T>, deps: DependencyList = []): UseApiResult<T> {
   const [data, setData] = useState<T | null>(null)
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState<string | null>(null)
@@ -22,6 +26,7 @@ export function useApi<T>(fetcher: () => Promise<T>): UseApiResult<T> {
   const fetcherRef = useRef(fetcher)
   fetcherRef.current = fetcher
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let cancelled = false
     setStatus('loading')
@@ -45,7 +50,9 @@ export function useApi<T>(fetcher: () => Promise<T>): UseApiResult<T> {
     return () => {
       cancelled = true
     }
-  }, [trigger])
+    // trigger + deps drive re-fetches; fetcherRef is intentionally excluded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trigger, ...deps])
 
   const refetch = useCallback(() => setTrigger((t) => t + 1), [])
 

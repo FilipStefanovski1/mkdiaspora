@@ -29,6 +29,7 @@ export interface User {
   openTo: OpenToType[]
   connections: number
   mutualConnections?: number
+  languages?: string[]
 }
 
 export type OpenToType =
@@ -39,6 +40,40 @@ export type OpenToType =
   | 'relocating'
   | 'advising'
   | 'cofounding'
+
+// ─── Contributions & Trust ────────────────────────────────────────────────────
+
+export type ContributionType =
+  | 'intro_made'
+  | 'opportunity_posted'
+  | 'event_organized'
+  | 'mentor_session'
+  | 'hub_joined'
+  | 'profile_verified'
+
+export interface ContributionItem {
+  id: string
+  type: ContributionType
+  description: string
+  date: string
+  trustPoints: number
+}
+
+export type ConnectionHop = Pick<User, 'id' | 'fullName' | 'avatarUrl' | 'tier'>
+
+export interface ConnectionPath {
+  fromUserId: string
+  toUserId: string
+  hops: ConnectionHop[]
+  degree: number
+}
+
+export interface ProfileDetail extends User {
+  languages: string[]
+  contributions: ContributionItem[]
+  connectionPath: ConnectionPath | null
+  totalTrustPoints: number
+}
 
 // ─── Hubs ─────────────────────────────────────────────────────────────────────
 
@@ -53,6 +88,44 @@ export interface Hub {
   isActive: boolean
   topIndustries: string[]
   recentActivity?: string
+}
+
+export interface HubAmbassador {
+  id: string
+  fullName: string
+  avatarUrl?: string
+  headline: string
+  tier: UserTier
+  role: string
+}
+
+export type RelocationCategory =
+  | 'housing'
+  | 'banking'
+  | 'networking'
+  | 'community'
+  | 'legal'
+  | 'lifestyle'
+
+export interface RelocationTip {
+  id: string
+  category: RelocationCategory
+  title: string
+  body: string
+}
+
+export interface HubDetail extends Hub {
+  slug: string
+  description: string
+  focusTags: string[]
+  ambassador: HubAmbassador | null
+  activeHelpers: number
+  upcomingEventCount: number
+  opportunityCount: number
+  relocTips: RelocationTip[]
+  featuredMembers: Pick<User, 'id' | 'fullName' | 'avatarUrl' | 'tier' | 'headline' | 'location'>[]
+  trustedHelpers: Pick<User, 'id' | 'fullName' | 'avatarUrl' | 'tier' | 'openTo' | 'headline'>[]
+  isJoined: boolean
 }
 
 // ─── Opportunities ────────────────────────────────────────────────────────────
@@ -83,6 +156,7 @@ export interface Opportunity {
 // ─── Introductions ────────────────────────────────────────────────────────────
 
 export type IntroStatus = 'pending' | 'accepted' | 'declined' | 'completed'
+export type IntroUrgency = 'low' | 'medium' | 'high'
 
 export interface IntroRequest {
   id: string
@@ -94,6 +168,21 @@ export interface IntroRequest {
   status: IntroStatus
   createdAt: string
   respondedAt?: string
+}
+
+export interface IntroRequestFull extends IntroRequest {
+  urgency: IntroUrgency
+  whatYouNeed: string
+  isRead: boolean
+}
+
+export interface IntroStats {
+  creditsRemaining: number
+  creditsTotal: number
+  totalSent: number
+  totalReceived: number
+  totalAccepted: number
+  pendingReceived: number
 }
 
 // ─── Events ───────────────────────────────────────────────────────────────────

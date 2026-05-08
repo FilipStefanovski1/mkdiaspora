@@ -1,4 +1,5 @@
-import type { User } from '@/types'
+import type { User, ProfileDetail, ConnectionPath } from '@/types'
+import { MOCK_CONTRIBUTIONS } from './contributions'
 
 export const MOCK_USERS: User[] = [
   {
@@ -20,6 +21,7 @@ export const MOCK_USERS: User[] = [
     openTo: ['mentoring', 'advising', 'collaborating'],
     connections: 312,
     mutualConnections: 14,
+    languages: ['Macedonian', 'English', 'German'],
   },
   {
     id: 'u2',
@@ -40,6 +42,7 @@ export const MOCK_USERS: User[] = [
     openTo: ['investing', 'cofounding', 'hiring'],
     connections: 541,
     mutualConnections: 8,
+    languages: ['Macedonian', 'English', 'French'],
   },
   {
     id: 'u3',
@@ -60,6 +63,7 @@ export const MOCK_USERS: User[] = [
     openTo: ['mentoring', 'collaborating', 'hiring'],
     connections: 189,
     mutualConnections: 22,
+    languages: ['Macedonian', 'English'],
   },
   {
     id: 'u4',
@@ -80,6 +84,7 @@ export const MOCK_USERS: User[] = [
     openTo: ['investing', 'advising', 'collaborating'],
     connections: 278,
     mutualConnections: 5,
+    languages: ['Macedonian', 'English', 'German', 'Serbian'],
   },
   {
     id: 'u5',
@@ -100,7 +105,94 @@ export const MOCK_USERS: User[] = [
     openTo: ['collaborating', 'mentoring'],
     connections: 134,
     mutualConnections: 3,
+    languages: ['Macedonian', 'English', 'Spanish'],
   },
 ]
 
 export const MOCK_CURRENT_USER: User = MOCK_USERS[0]
+
+// ─── Profile details (extended) ───────────────────────────────────────────────
+
+const currentUserConnectionPath: ConnectionPath = {
+  fromUserId: 'u1',
+  toUserId: 'u4',
+  degree: 2,
+  hops: [
+    { id: 'u1', fullName: 'Elena Petrovska', avatarUrl: 'https://i.pravatar.cc/150?u=u1', tier: 'ambassador' },
+    { id: 'u3', fullName: 'Marija Nikolova', avatarUrl: 'https://i.pravatar.cc/150?u=u3', tier: 'connector' },
+    { id: 'u4', fullName: 'Bojan Stojkovski', avatarUrl: 'https://i.pravatar.cc/150?u=u4', tier: 'ambassador' },
+  ],
+}
+
+const CONTRIBUTIONS_TOTAL = MOCK_CONTRIBUTIONS.reduce((s, c) => s + c.trustPoints, 0)
+
+export const MOCK_PROFILE_DETAILS: Record<string, ProfileDetail> = {
+  u1: {
+    ...MOCK_USERS[0],
+    languages: ['Macedonian', 'English', 'German'],
+    contributions: MOCK_CONTRIBUTIONS,
+    connectionPath: null,
+    totalTrustPoints: CONTRIBUTIONS_TOTAL,
+  },
+  u2: {
+    ...MOCK_USERS[1],
+    languages: ['Macedonian', 'English', 'French'],
+    contributions: [
+      { id: 'c_u2_1', type: 'opportunity_posted', description: 'Posted Senior Frontend Engineer role at Levanta', date: '2024-10-01', trustPoints: 10 },
+      { id: 'c_u2_2', type: 'intro_made', description: 'Facilitated 4 investor-founder introductions', date: '2024-09-20', trustPoints: 60 },
+      { id: 'c_u2_3', type: 'event_organized', description: 'Co-organized Toronto Diaspora Founders Summit', date: '2024-08-10', trustPoints: 25 },
+      { id: 'c_u2_4', type: 'profile_verified', description: 'Completed profile verification', date: '2023-11-05', trustPoints: 10 },
+    ],
+    connectionPath: currentUserConnectionPath,
+    totalTrustPoints: 105,
+  },
+  u3: {
+    ...MOCK_USERS[2],
+    languages: ['Macedonian', 'English'],
+    contributions: [
+      { id: 'c_u3_1', type: 'mentor_session', description: 'Completed 5 mentorship sessions with junior engineers', date: '2024-09-15', trustPoints: 50 },
+      { id: 'c_u3_2', type: 'intro_made', description: 'Connected Berlin-London engineering teams', date: '2024-08-22', trustPoints: 15 },
+      { id: 'c_u3_3', type: 'profile_verified', description: 'Completed profile verification', date: '2024-03-12', trustPoints: 10 },
+    ],
+    connectionPath: {
+      fromUserId: 'u1',
+      toUserId: 'u3',
+      degree: 1,
+      hops: [
+        { id: 'u1', fullName: 'Elena Petrovska', avatarUrl: 'https://i.pravatar.cc/150?u=u1', tier: 'ambassador' },
+        { id: 'u3', fullName: 'Marija Nikolova', avatarUrl: 'https://i.pravatar.cc/150?u=u3', tier: 'connector' },
+      ],
+    },
+    totalTrustPoints: 75,
+  },
+  u4: {
+    ...MOCK_USERS[3],
+    languages: ['Macedonian', 'English', 'German', 'Serbian'],
+    contributions: [
+      { id: 'c_u4_1', type: 'intro_made', description: 'Facilitated 7 founder-investor introductions', date: '2024-10-02', trustPoints: 105 },
+      { id: 'c_u4_2', type: 'event_organized', description: 'Organized Vienna Investor Breakfast', date: '2024-09-28', trustPoints: 25 },
+      { id: 'c_u4_3', type: 'profile_verified', description: 'Completed profile verification', date: '2024-02-22', trustPoints: 10 },
+    ],
+    connectionPath: currentUserConnectionPath,
+    totalTrustPoints: 140,
+  },
+  u5: {
+    ...MOCK_USERS[4],
+    languages: ['Macedonian', 'English', 'Spanish'],
+    contributions: [
+      { id: 'c_u5_1', type: 'hub_joined', description: 'Joined San Francisco diaspora community', date: '2024-05-03', trustPoints: 5 },
+      { id: 'c_u5_2', type: 'profile_verified', description: 'Profile under review', date: '2024-05-01', trustPoints: 0 },
+    ],
+    connectionPath: {
+      fromUserId: 'u1',
+      toUserId: 'u5',
+      degree: 2,
+      hops: [
+        { id: 'u1', fullName: 'Elena Petrovska', avatarUrl: 'https://i.pravatar.cc/150?u=u1', tier: 'ambassador' },
+        { id: 'u4', fullName: 'Bojan Stojkovski', avatarUrl: 'https://i.pravatar.cc/150?u=u4', tier: 'ambassador' },
+        { id: 'u5', fullName: 'Sofia Trajkoska', avatarUrl: 'https://i.pravatar.cc/150?u=u5', tier: 'connector' },
+      ],
+    },
+    totalTrustPoints: 5,
+  },
+}

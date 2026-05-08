@@ -1,7 +1,7 @@
 /**
  * api.ts — Single access point for all data.
  *
- * Components and features MUST import from here, never directly from mock/.
+ * Components and features MUST import from here, never from mock/ directly.
  * When Supabase is wired up, swap the mock implementations below without
  * touching any consumer code.
  */
@@ -9,9 +9,12 @@
 import type {
   User,
   Hub,
+  HubDetail,
   Opportunity,
   DiasporaEvent,
-  IntroRequest,
+  IntroRequestFull,
+  IntroStats,
+  ProfileDetail,
   PaginatedResponse,
   FilterState,
   OpportunityType,
@@ -19,12 +22,15 @@ import type {
 import {
   MOCK_USERS,
   MOCK_CURRENT_USER,
+  MOCK_PROFILE_DETAILS,
   MOCK_HUBS,
+  MOCK_HUB_DETAILS,
   MOCK_OPPORTUNITIES,
   MOCK_EVENTS,
+  MOCK_INTRO_REQUESTS,
+  MOCK_INTRO_STATS,
 } from './mock'
 
-// Simulates network latency in development
 const delay = (ms = 400) => new Promise((res) => setTimeout(res, ms))
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
@@ -42,6 +48,22 @@ export async function getUserById(id: string): Promise<User | null> {
 export async function getUserByUsername(username: string): Promise<User | null> {
   await delay()
   return MOCK_USERS.find((u) => u.username === username) ?? null
+}
+
+// ─── Profiles ─────────────────────────────────────────────────────────────────
+
+export async function getProfileDetail(usernameOrId: string): Promise<ProfileDetail | null> {
+  await delay()
+  const byUsername = Object.values(MOCK_PROFILE_DETAILS).find(
+    (p) => p.username === usernameOrId,
+  )
+  if (byUsername) return byUsername
+  return MOCK_PROFILE_DETAILS[usernameOrId] ?? null
+}
+
+export async function getCurrentUserProfile(): Promise<ProfileDetail> {
+  await delay(200)
+  return MOCK_PROFILE_DETAILS['u1']
 }
 
 // ─── Members / Explore ────────────────────────────────────────────────────────
@@ -97,6 +119,37 @@ export async function getHubById(id: string): Promise<Hub | null> {
   return MOCK_HUBS.find((h) => h.id === id) ?? null
 }
 
+export async function getHubDetails(search?: string): Promise<HubDetail[]> {
+  await delay()
+  let results = [...MOCK_HUB_DETAILS]
+
+  if (search) {
+    const q = search.toLowerCase()
+    results = results.filter(
+      (h) =>
+        h.city.toLowerCase().includes(q) ||
+        h.country.toLowerCase().includes(q) ||
+        h.focusTags.some((t) => t.toLowerCase().includes(q)) ||
+        h.topIndustries.some((i) => i.toLowerCase().includes(q)),
+    )
+  }
+
+  return results
+}
+
+export async function getHubDetail(slug: string): Promise<HubDetail | null> {
+  await delay()
+  return MOCK_HUB_DETAILS.find((h) => h.slug === slug) ?? null
+}
+
+export async function getHubMembers(hubId: string): Promise<User[]> {
+  await delay()
+  const hub = MOCK_HUB_DETAILS.find((h) => h.id === hubId)
+  if (!hub) return []
+  const memberIds = new Set(hub.featuredMembers.map((m) => m.id))
+  return MOCK_USERS.filter((u) => memberIds.has(u.id))
+}
+
 // ─── Opportunities ────────────────────────────────────────────────────────────
 
 export async function getOpportunities(
@@ -125,10 +178,34 @@ export async function getOpportunityById(id: string): Promise<Opportunity | null
 
 // ─── Introductions ────────────────────────────────────────────────────────────
 
-export async function getMyIntroRequests(): Promise<IntroRequest[]> {
+export async function getMyIntroRequests(): Promise<IntroRequestFull[]> {
   await delay()
-  // No mock intro data yet — returns empty array
-  return []
+  return MOCK_INTRO_REQUESTS
+}
+
+export async function getReceivedIntros(): Promise<IntroRequestFull[]> {
+  await delay()
+  const currentUserId = MOCK_CURRENT_USER.id
+  return MOCK_INTRO_REQUESTS.filter((r) => r.toUser.id === currentUserId)
+}
+
+export async function getSentIntros(): Promise<IntroRequestFull[]> {
+  await delay()
+  const currentUserId = MOCK_CURRENT_USER.id
+  return MOCK_INTRO_REQUESTS.filter((r) => r.fromUser.id === currentUserId)
+}
+
+export async function getIntroStats(): Promise<IntroStats> {
+  await delay(200)
+  return MOCK_INTRO_STATS
+}
+
+export async function sendIntroRequest(
+  _toUserId: string,
+  _payload: { message: string; context: string; whatYouNeed: string; urgency: string },
+): Promise<{ success: boolean }> {
+  await delay(600)
+  return { success: true }
 }
 
 // ─── Events ───────────────────────────────────────────────────────────────────
