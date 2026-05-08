@@ -1,18 +1,22 @@
 import { Suspense, lazy, useState, useCallback } from 'react'
-import { Search, SlidersHorizontal, Globe2, X } from 'lucide-react'
+import { SlidersHorizontal, Globe2, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useApi } from '@/hooks/useApi'
 import { getMembers, getHubs } from '@/lib/api'
 import { MemberCard } from '@/components/shared/MemberCard'
+import { MemberPreviewPanel } from '@/components/shared/MemberPreviewPanel'
+import { SearchInput } from '@/components/shared/SearchInput'
 import { PageHeader } from '@/components/shared/PageHeader'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import type { FilterState, UserTier, OpenToType } from '@/types'
 import { formatNumber } from '@/lib/utils'
+import type { FilterState, UserTier, OpenToType, User } from '@/types'
 
 const GlobeView = lazy(() =>
   import('@/components/shared/GlobeView').then((m) => ({ default: m.GlobeView })),
 )
+
+// ─── Filter options ───────────────────────────────────────────────────────────
 
 const TIER_OPTIONS: { value: UserTier; label: string }[] = [
   { value: 'explorer', label: 'Explorer' },
@@ -31,6 +35,8 @@ const OPEN_TO_OPTIONS: { value: OpenToType; label: string }[] = [
   { value: 'advising', label: 'Advising' },
 ]
 
+// ─── Filter sidebar ───────────────────────────────────────────────────────────
+
 function FilterSidebar({
   filters,
   onChange,
@@ -43,7 +49,7 @@ function FilterSidebar({
   const hasActive = Object.values(filters).some(Boolean)
 
   return (
-    <aside className="w-56 flex-shrink-0 space-y-5">
+    <aside className="w-52 flex-shrink-0 space-y-5">
       <div className="flex items-center justify-between">
         <span className="text-xs font-semibold text-ink uppercase tracking-widest">
           Filters
@@ -53,7 +59,7 @@ function FilterSidebar({
             onClick={onReset}
             className="flex items-center gap-1 text-2xs text-ink-muted hover:text-accent-light transition-colors"
           >
-            <X size={10} /> Reset
+            <X size={10} /> Reset all
           </button>
         )}
       </div>
@@ -113,16 +119,63 @@ function FilterSidebar({
           ))}
         </div>
       </div>
+
+      {/* Active filter summary */}
+      {hasActive && (
+        <div className="pt-2 border-t border-border">
+          <div className="space-y-1">
+            {filters.location && (
+              <div className="flex items-center justify-between text-2xs">
+                <span className="text-ink-faint">City</span>
+                <button
+                  onClick={() => onChange({ location: undefined })}
+                  className="flex items-center gap-0.5 text-ink hover:text-accent-light transition-colors"
+                >
+                  {filters.location} <X size={9} />
+                </button>
+              </div>
+            )}
+            {filters.tier && (
+              <div className="flex items-center justify-between text-2xs">
+                <span className="text-ink-faint">Tier</span>
+                <button
+                  onClick={() => onChange({ tier: undefined })}
+                  className="flex items-center gap-0.5 text-ink capitalize hover:text-accent-light transition-colors"
+                >
+                  {filters.tier} <X size={9} />
+                </button>
+              </div>
+            )}
+            {filters.openTo && (
+              <div className="flex items-center justify-between text-2xs">
+                <span className="text-ink-faint">Open To</span>
+                <button
+                  onClick={() => onChange({ openTo: undefined })}
+                  className="flex items-center gap-0.5 text-ink capitalize hover:text-accent-light transition-colors"
+                >
+                  {filters.openTo} <X size={9} />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </aside>
   )
 }
 
+// ─── Member grid ──────────────────────────────────────────────────────────────
+
 function MemberGrid({
   filters,
   search,
+  selectedUserId,
+  onSelect,
 }: {
   filters: FilterState
   search: string
+  selectedUserId: string | null
+  onSelect: (user: User) => void
 }) {
   const combinedFilters = { ...filters, search: search || undefined }
   const { data: response, isLoading } = useApi(() => getMembers(combinedFilters))
@@ -158,17 +211,28 @@ function MemberGrid({
         variants={{ visible: { transition: { staggerChildren: 0.04 } } }}
       >
         {response.data.map((user, i) => (
-          <MemberCard key={user.id} user={user} index={i} />
+          <div
+            key={user.id}
+            onClick={() => onSelect(user)}
+            className={`cursor-pointer rounded-2xl transition-all ${
+              selectedUserId === user.id ? 'ring-2 ring-accent/60' : ''
+            }`}
+          >
+            <MemberCard user={user} index={i} />
+          </div>
         ))}
       </motion.div>
     </div>
   )
 }
 
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export function ExplorePage() {
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState<FilterState>({})
   const [showGlobe, setShowGlobe] = useState(true)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const { data: hubs } = useApi(getHubs)
 
   const handleFilterChange = useCallback((patch: Partial<FilterState>) => {
@@ -178,6 +242,10 @@ export function ExplorePage() {
   const handleReset = useCallback(() => {
     setFilters({})
     setSearch('')
+  }, [])
+
+  const handleSelectUser = useCallback((user: User) => {
+    setSelectedUser((prev) => (prev?.id === user.id ? null : user))
   }, [])
 
   const activeFilterCount = Object.values(filters).filter(Boolean).length
@@ -192,20 +260,13 @@ export function ExplorePage() {
         />
 
         {/* Search + globe toggle */}
-        <div className="flex items-center gap-3">
-          <div className="relative flex-1 max-w-sm">
-            <Search
-              size={14}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint"
-            />
-            <input
-              type="text"
-              placeholder="Search by name, role, or skill…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-sm bg-surface-2 border border-border rounded-xl text-ink placeholder:text-ink-faint outline-none focus:border-accent/40 transition-colors"
-            />
-          </div>
+        <div className="flex items-center gap-3 flex-wrap">
+          <SearchInput
+            value={search}
+            onChange={setSearch}
+            placeholder="Search by name, role, or skill…"
+            className="flex-1 max-w-sm"
+          />
 
           <Button
             variant={showGlobe ? 'secondary' : 'ghost'}
@@ -236,25 +297,39 @@ export function ExplorePage() {
               transition={{ duration: 0.35, ease: 'easeInOut' }}
               style={{ overflow: 'hidden' }}
             >
-              <Suspense
-                fallback={<div className="h-[380px] card-glass rounded-2xl animate-pulse" />}
-              >
+              <Suspense fallback={<div className="h-[380px] card-glass rounded-2xl animate-pulse" />}>
                 <GlobeView hubs={hubs ?? []} height={380} />
               </Suspense>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Filters + grid */}
-        <div className="flex gap-8 items-start">
+        {/* Filters + grid + preview panel */}
+        <div className="flex gap-6 items-start">
           <FilterSidebar
             filters={filters}
             onChange={handleFilterChange}
             onReset={handleReset}
           />
+
           <div className="flex-1 min-w-0">
-            <MemberGrid filters={filters} search={search} />
+            <MemberGrid
+              filters={filters}
+              search={search}
+              selectedUserId={selectedUser?.id ?? null}
+              onSelect={handleSelectUser}
+            />
           </div>
+
+          <AnimatePresence>
+            {selectedUser && (
+              <MemberPreviewPanel
+                key={selectedUser.id}
+                user={selectedUser}
+                onClose={() => setSelectedUser(null)}
+              />
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>

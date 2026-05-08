@@ -1,0 +1,86 @@
+import type { AppNotification } from '@/types'
+import { MOCK_USERS } from './users'
+
+const u = (i: number) => ({
+  id: MOCK_USERS[i].id,
+  fullName: MOCK_USERS[i].fullName,
+  avatarUrl: MOCK_USERS[i].avatarUrl,
+})
+
+export const MOCK_NOTIFICATIONS: AppNotification[] = [
+  {
+    id: 'n1',
+    type: 'intro_request',
+    title: 'New intro request',
+    body: 'Aleksandar Dimovski wants to connect with you.',
+    isRead: false,
+    createdAt: '2024-10-06',
+    link: '/intros',
+    actor: u(1),
+  },
+  {
+    id: 'n2',
+    type: 'intro_accepted',
+    title: 'Intro accepted',
+    body: 'Marija Nikolova accepted your intro request.',
+    isRead: false,
+    createdAt: '2024-10-05',
+    link: '/intros',
+    actor: u(2),
+  },
+  {
+    id: 'n3',
+    type: 'opportunity_match',
+    title: 'New opportunity match',
+    body: 'A senior product role in Berlin matches your profile.',
+    isRead: false,
+    createdAt: '2024-10-04',
+    link: '/opportunities',
+  },
+  {
+    id: 'n4',
+    type: 'event_reminder',
+    title: 'Event tomorrow',
+    body: "Founders Night Berlin is tomorrow at 7pm.",
+    isRead: true,
+    createdAt: '2024-10-03',
+    link: '/events',
+  },
+  {
+    id: 'n5',
+    type: 'hub_activity',
+    title: 'Berlin hub update',
+    body: '12 new members joined the Berlin hub this week.',
+    isRead: true,
+    createdAt: '2024-10-02',
+    link: '/hubs/berlin',
+  },
+  {
+    id: 'n6',
+    type: 'trust_update',
+    title: 'Trust score increased',
+    body: 'You earned 15 trust points for making a successful intro.',
+    isRead: true,
+    createdAt: '2024-10-01',
+    link: '/profile',
+  },
+  {
+    id: 'n7',
+    type: 'intro_request',
+    title: 'New intro request',
+    body: 'Sofia Andonova sent you a collaboration request.',
+    isRead: true,
+    createdAt: '2024-09-28',
+    link: '/intros',
+    actor: u(4),
+  },
+  {
+    id: 'n8',
+    type: 'hub_activity',
+    title: 'Vienna hub growing',
+    body: '18 new members joined Vienna hub this month.',
+    isRead: true,
+    createdAt: '2024-09-25',
+    link: '/hubs/vienna',
+  },
+]

@@ -241,6 +241,47 @@ export interface SignupPayload extends LoginCredentials {
   location: UserLocation
 }
 
+// ─── Notifications ────────────────────────────────────────────────────────────
+
+export type NotificationType =
+  | 'intro_request'
+  | 'intro_accepted'
+  | 'opportunity_match'
+  | 'event_reminder'
+  | 'hub_activity'
+  | 'trust_update'
+
+export interface AppNotification {
+  id: string
+  type: NotificationType
+  title: string
+  body: string
+  isRead: boolean
+  createdAt: string
+  link?: string
+  actor?: Pick<User, 'id' | 'fullName' | 'avatarUrl'>
+}
+
+// ─── Recommendations ──────────────────────────────────────────────────────────
+
+export interface RecommendedMember {
+  user: User
+  reason: string
+  score: number
+}
+
+export interface RecommendedHub {
+  hub: Hub
+  reason: string
+  score: number
+}
+
+export interface RecommendedOpportunity {
+  opportunity: Opportunity
+  reason: string
+  score: number
+}
+
 // ─── UI / Shared ──────────────────────────────────────────────────────────────
 
 export type SortOrder = 'asc' | 'desc'
@@ -251,4 +292,5 @@ export interface FilterState {
   industry?: string
   tier?: UserTier
   openTo?: OpenToType
+  hub?: string
 }

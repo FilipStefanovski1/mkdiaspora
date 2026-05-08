@@ -5,3 +5,9 @@ export { MOCK_OPPORTUNITIES } from './opportunities'
 export { MOCK_EVENTS } from './events'
 export { MOCK_INTRO_REQUESTS, MOCK_INTRO_STATS } from './intros'
 export { MOCK_CONTRIBUTIONS } from './contributions'
+export { MOCK_NOTIFICATIONS } from './notifications'
+export {
+  MOCK_RECOMMENDED_MEMBERS,
+  MOCK_RECOMMENDED_HUBS,
+  MOCK_RECOMMENDED_OPPORTUNITIES,
+} from './recommendations'

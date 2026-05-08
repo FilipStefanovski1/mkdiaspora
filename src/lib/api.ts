@@ -18,6 +18,10 @@ import type {
   PaginatedResponse,
   FilterState,
   OpportunityType,
+  AppNotification,
+  RecommendedMember,
+  RecommendedHub,
+  RecommendedOpportunity,
 } from '@/types'
 import {
   MOCK_USERS,
@@ -29,6 +33,10 @@ import {
   MOCK_EVENTS,
   MOCK_INTRO_REQUESTS,
   MOCK_INTRO_STATS,
+  MOCK_NOTIFICATIONS,
+  MOCK_RECOMMENDED_MEMBERS,
+  MOCK_RECOMMENDED_HUBS,
+  MOCK_RECOMMENDED_OPPORTUNITIES,
 } from './mock'
 
 const delay = (ms = 400) => new Promise((res) => setTimeout(res, ms))
@@ -223,6 +231,40 @@ export async function getEventById(id: string): Promise<DiasporaEvent | null> {
   return MOCK_EVENTS.find((e) => e.id === id) ?? null
 }
 
+// ─── Notifications ────────────────────────────────────────────────────────────
+
+export async function getNotifications(): Promise<AppNotification[]> {
+  await delay(300)
+  return MOCK_NOTIFICATIONS
+}
+
+export async function markNotificationRead(_id: string): Promise<{ success: boolean }> {
+  await delay(200)
+  return { success: true }
+}
+
+export async function markAllNotificationsRead(): Promise<{ success: boolean }> {
+  await delay(300)
+  return { success: true }
+}
+
+// ─── Recommendations ──────────────────────────────────────────────────────────
+
+export async function getRecommendedMembers(): Promise<RecommendedMember[]> {
+  await delay(400)
+  return MOCK_RECOMMENDED_MEMBERS
+}
+
+export async function getRecommendedHubs(): Promise<RecommendedHub[]> {
+  await delay(400)
+  return MOCK_RECOMMENDED_HUBS
+}
+
+export async function getRecommendedOpportunities(): Promise<RecommendedOpportunity[]> {
+  await delay(400)
+  return MOCK_RECOMMENDED_OPPORTUNITIES
+}
+
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 
 export interface DashboardSummary {
@@ -231,6 +273,7 @@ export interface DashboardSummary {
   upcomingEvents: number
   newConnections: number
   hubActivity: { hubCity: string; update: string }[]
+  networkThisWeek: { newConnections: number; introsMade: number; hubUpdates: number }
 }
 
 export async function getDashboardSummary(): Promise<DashboardSummary> {
@@ -245,5 +288,6 @@ export async function getDashboardSummary(): Promise<DashboardSummary> {
       { hubCity: 'London', update: '12 new job listings added' },
       { hubCity: 'Toronto', update: '3 new intro connections this week' },
     ],
+    networkThisWeek: { newConnections: 7, introsMade: 2, hubUpdates: 3 },
   }
 }
