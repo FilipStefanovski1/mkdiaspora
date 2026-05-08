@@ -2,6 +2,17 @@ import type { HubDetail } from '@/types'
 import { MOCK_USERS } from './users'
 
 const u = (i: number) => MOCK_USERS[i]
+// Named indices for readability
+// Berlin: u6=Stefan, u7=Kristijan, u8=Teodora, u9=Viktor, u10=Jasmina, u11=Andrej, u12=Lena, u13=Damjan, u14=Sara, u15=Nikola, u16=Filip
+// London: u17=Ivan, u18=Biljana, u19=Martin, u20=Tijana, u21=Goran, u22=Dragana, u23=Simona, u24=Vasilija, u25=Kristina
+// Toronto: u26=Darko, u27=Sonja, u28=Zoran, u29=Olivera, u30=Tomas, u31=Petra
+// New York: u32=Aleksandar, u33=Lidija, u34=Dushan, u35=Angela, u36=Katarina, u37=Stefan
+// Vienna: u38=Irena, u39=Marko, u40=Milena, u41=Kristofor, u42=Borce
+// Zürich: u43=Nikolaj, u44=Vesna, u45=Darko, u46=Maja
+// Amsterdam: u47=Risto, u48=Elena, u49=Nikola, u50=Mihail
+// Melbourne: u51=Petre, u52=Jana, u53=Viktor, u54=Ilija
+// Stockholm: u55=Lina, u56=Kire, u57=Dimitar, u58=Monika
+// Skopje: u59=Hristijan, u60=Tamara
 
 export const MOCK_HUB_DETAILS: HubDetail[] = [
   {
@@ -15,7 +26,7 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     memberCount: 284,
     isActive: true,
     topIndustries: ['Tech', 'Design', 'Finance'],
-    recentActivity: 'Founders Night this Friday · 34 RSVP',
+    recentActivity: 'Founders Night this Friday · 34 RSVP · 2 new intros made this week',
     description:
       "The largest and most active Macedonian diaspora hub in Germany. Berlin's tech scene draws designers, engineers, and entrepreneurs — making it a natural home for the Macedonian professional community. Strong mentorship culture and highly collaborative.",
     focusTags: ['Startups', 'Design', 'Engineering', 'Remote Work', 'Mentorship'],
@@ -59,9 +70,13 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     ],
     featuredMembers: [
       { id: u(0).id, fullName: u(0).fullName, avatarUrl: u(0).avatarUrl, tier: u(0).tier, headline: u(0).headline, location: u(0).location },
+      { id: u(7).id, fullName: u(7).fullName, avatarUrl: u(7).avatarUrl, tier: u(7).tier, headline: u(7).headline, location: u(7).location },
+      { id: u(11).id, fullName: u(11).fullName, avatarUrl: u(11).avatarUrl, tier: u(11).tier, headline: u(11).headline, location: u(11).location },
     ],
     trustedHelpers: [
       { id: u(0).id, fullName: u(0).fullName, avatarUrl: u(0).avatarUrl, tier: u(0).tier, openTo: u(0).openTo, headline: u(0).headline },
+      { id: u(5).id, fullName: u(5).fullName, avatarUrl: u(5).avatarUrl, tier: u(5).tier, openTo: u(5).openTo, headline: u(5).headline },
+      { id: u(8).id, fullName: u(8).fullName, avatarUrl: u(8).avatarUrl, tier: u(8).tier, openTo: u(8).openTo, headline: u(8).headline },
     ],
   },
 
@@ -76,7 +91,7 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     memberCount: 412,
     isActive: true,
     topIndustries: ['Finance', 'Tech', 'Law'],
-    recentActivity: 'Job board updated · 12 new listings',
+    recentActivity: 'Women in Diaspora dinner next week · Finance breakfast full · 5 new intros this month',
     description:
       "London hosts the highest concentration of Macedonian professionals in the UK. Strong presence in finance, legal, and technology sectors. The hub is known for high-quality introductions and a tight-knit professional network.",
     focusTags: ['Finance', 'Law', 'Tech', 'Networking', 'Career Growth'],
@@ -114,9 +129,13 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     ],
     featuredMembers: [
       { id: u(2).id, fullName: u(2).fullName, avatarUrl: u(2).avatarUrl, tier: u(2).tier, headline: u(2).headline, location: u(2).location },
+      { id: u(17).id, fullName: u(17).fullName, avatarUrl: u(17).avatarUrl, tier: u(17).tier, headline: u(17).headline, location: u(17).location },
+      { id: u(19).id, fullName: u(19).fullName, avatarUrl: u(19).avatarUrl, tier: u(19).tier, headline: u(19).headline, location: u(19).location },
     ],
     trustedHelpers: [
       { id: u(2).id, fullName: u(2).fullName, avatarUrl: u(2).avatarUrl, tier: u(2).tier, openTo: u(2).openTo, headline: u(2).headline },
+      { id: u(17).id, fullName: u(17).fullName, avatarUrl: u(17).avatarUrl, tier: u(17).tier, openTo: u(17).openTo, headline: u(17).headline },
+      { id: u(21).id, fullName: u(21).fullName, avatarUrl: u(21).avatarUrl, tier: u(21).tier, openTo: u(21).openTo, headline: u(21).headline },
     ],
   },
 
@@ -131,7 +150,7 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     memberCount: 197,
     isActive: true,
     topIndustries: ['Tech', 'Real Estate', 'Startups'],
-    recentActivity: '3 new intro connections this week',
+    recentActivity: 'Family dinner next month · 64 RSVP · Sonja helped 3 members with Express Entry this week',
     description:
       "Toronto's Macedonian community is one of the most entrepreneurially active in North America. A strong startup culture, welcoming immigration policies, and growing tech sector make it a top destination for diaspora professionals.",
     focusTags: ['Startups', 'Real Estate', 'Investing', 'Immigration', 'Tech'],
@@ -169,9 +188,13 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     ],
     featuredMembers: [
       { id: u(1).id, fullName: u(1).fullName, avatarUrl: u(1).avatarUrl, tier: u(1).tier, headline: u(1).headline, location: u(1).location },
+      { id: u(25).id, fullName: u(25).fullName, avatarUrl: u(25).avatarUrl, tier: u(25).tier, headline: u(25).headline, location: u(25).location },
+      { id: u(26).id, fullName: u(26).fullName, avatarUrl: u(26).avatarUrl, tier: u(26).tier, headline: u(26).headline, location: u(26).location },
     ],
     trustedHelpers: [
       { id: u(1).id, fullName: u(1).fullName, avatarUrl: u(1).avatarUrl, tier: u(1).tier, openTo: u(1).openTo, headline: u(1).headline },
+      { id: u(25).id, fullName: u(25).fullName, avatarUrl: u(25).avatarUrl, tier: u(25).tier, openTo: u(25).openTo, headline: u(25).headline },
+      { id: u(26).id, fullName: u(26).fullName, avatarUrl: u(26).avatarUrl, tier: u(26).tier, openTo: u(26).openTo, headline: u(26).headline },
     ],
   },
 
@@ -186,7 +209,7 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     memberCount: 356,
     isActive: true,
     topIndustries: ['Finance', 'Media', 'Law'],
-    recentActivity: 'Event upcoming · Diaspora Founders Night',
+    recentActivity: 'Finance & Founders Night filling up · Aleksandar made 3 intros this month',
     description:
       "New York City hosts one of the most established Macedonian communities in the US. Strong in finance, media, and legal — with a growing presence in tech and startups. The hub has deep roots and a proud professional tradition.",
     focusTags: ['Finance', 'Wall Street', 'Media', 'Law', 'Startups'],
@@ -209,8 +232,14 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
         body: "There are established Macedonian Orthodox church communities in the Bronx and Queens that serve as social anchors for new arrivals.",
       },
     ],
-    featuredMembers: [],
-    trustedHelpers: [],
+    featuredMembers: [
+      { id: u(31).id, fullName: u(31).fullName, avatarUrl: u(31).avatarUrl, tier: u(31).tier, headline: u(31).headline, location: u(31).location },
+      { id: u(32).id, fullName: u(32).fullName, avatarUrl: u(32).avatarUrl, tier: u(32).tier, headline: u(32).headline, location: u(32).location },
+    ],
+    trustedHelpers: [
+      { id: u(31).id, fullName: u(31).fullName, avatarUrl: u(31).avatarUrl, tier: u(31).tier, openTo: u(31).openTo, headline: u(31).headline },
+      { id: u(32).id, fullName: u(32).fullName, avatarUrl: u(32).avatarUrl, tier: u(32).tier, openTo: u(32).openTo, headline: u(32).headline },
+    ],
   },
 
   {
@@ -224,7 +253,7 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     memberCount: 143,
     isActive: true,
     topIndustries: ['Diplomacy', 'Tech', 'Consulting'],
-    recentActivity: '18 new members this month',
+    recentActivity: 'Investor Breakfast next week · Kristofor made 2 intros · 18 new members this month',
     description:
       "Vienna's geographic proximity to North Macedonia makes it a natural transit and settlement hub. Strong diplomatic, legal, and consulting communities. Growing startup ecosystem.",
     focusTags: ['Diplomacy', 'Consulting', 'Law', 'Proximity to MK', 'EU Base'],
@@ -256,9 +285,13 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     ],
     featuredMembers: [
       { id: u(3).id, fullName: u(3).fullName, avatarUrl: u(3).avatarUrl, tier: u(3).tier, headline: u(3).headline, location: u(3).location },
+      { id: u(37).id, fullName: u(37).fullName, avatarUrl: u(37).avatarUrl, tier: u(37).tier, headline: u(37).headline, location: u(37).location },
+      { id: u(40).id, fullName: u(40).fullName, avatarUrl: u(40).avatarUrl, tier: u(40).tier, headline: u(40).headline, location: u(40).location },
     ],
     trustedHelpers: [
       { id: u(3).id, fullName: u(3).fullName, avatarUrl: u(3).avatarUrl, tier: u(3).tier, openTo: u(3).openTo, headline: u(3).headline },
+      { id: u(37).id, fullName: u(37).fullName, avatarUrl: u(37).avatarUrl, tier: u(37).tier, openTo: u(37).openTo, headline: u(37).headline },
+      { id: u(40).id, fullName: u(40).fullName, avatarUrl: u(40).avatarUrl, tier: u(40).tier, openTo: u(40).openTo, headline: u(40).headline },
     ],
   },
 
@@ -273,7 +306,7 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     memberCount: 98,
     isActive: true,
     topIndustries: ['Finance', 'Pharma', 'Tech'],
-    recentActivity: 'Mentorship program launched',
+    recentActivity: 'Finance roundtable this week · Darko raising Series A · Mentorship program active',
     description:
       "A smaller but high-quality hub. Zurich attracts senior Macedonian professionals in private banking, pharma, and engineering. Known for high earnings and a focused professional community.",
     focusTags: ['Private Banking', 'Pharma', 'Engineering', 'Quality of Life'],
@@ -290,8 +323,14 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
         body: "Open a Neon or Raiffeisen account online. Traditional private banking requires a residence permit. Credit Suisse and UBS are most expat-friendly.",
       },
     ],
-    featuredMembers: [],
-    trustedHelpers: [],
+    featuredMembers: [
+      { id: u(42).id, fullName: u(42).fullName, avatarUrl: u(42).avatarUrl, tier: u(42).tier, headline: u(42).headline, location: u(42).location },
+      { id: u(44).id, fullName: u(44).fullName, avatarUrl: u(44).avatarUrl, tier: u(44).tier, headline: u(44).headline, location: u(44).location },
+    ],
+    trustedHelpers: [
+      { id: u(42).id, fullName: u(42).fullName, avatarUrl: u(42).avatarUrl, tier: u(42).tier, openTo: u(42).openTo, headline: u(42).headline },
+      { id: u(43).id, fullName: u(43).fullName, avatarUrl: u(43).avatarUrl, tier: u(43).tier, openTo: u(43).openTo, headline: u(43).headline },
+    ],
   },
 
   {
@@ -362,5 +401,181 @@ export const MOCK_HUB_DETAILS: HubDetail[] = [
     ],
     featuredMembers: [],
     trustedHelpers: [],
+  },
+
+  {
+    id: 'h9',
+    slug: 'amsterdam',
+    city: 'Amsterdam',
+    country: 'Netherlands',
+    countryCode: 'NL',
+    lat: 52.377,
+    lng: 4.9,
+    memberCount: 78,
+    isActive: true,
+    topIndustries: ['Tech', 'Semiconductors', 'Finance'],
+    recentActivity: 'Monthly tech happy hour · Risto helped 2 newcomers this week',
+    description:
+      "Amsterdam attracts Macedonian engineers and tech professionals drawn to ASML, Booking.com, Adyen, and the broader Dutch startup ecosystem. A small but growing hub with a warm, informal culture.",
+    focusTags: ['Tech', 'Engineering', 'Startups', 'Newcomers', 'Fintech'],
+    ambassador: null,
+    activeHelpers: 6,
+    upcomingEventCount: 1,
+    opportunityCount: 2,
+    isJoined: false,
+    relocTips: [
+      {
+        id: 'rt19',
+        category: 'legal',
+        title: 'BSN number and registration',
+        body: "Register at your local gemeente within 5 days of arrival to get a BSN (citizen service number). You need this for a bank account, health insurance, and tax registration.",
+      },
+      {
+        id: 'rt20',
+        category: 'housing',
+        title: 'Finding housing in Amsterdam',
+        body: "Funda and Pararius are the main platforms. Competition is fierce — many listings require a Dutch bank account or guarantor. Expat-focused agencies like Expatxl can help.",
+      },
+    ],
+    featuredMembers: [
+      { id: u(46).id, fullName: u(46).fullName, avatarUrl: u(46).avatarUrl, tier: u(46).tier, headline: u(46).headline, location: u(46).location },
+      { id: u(47).id, fullName: u(47).fullName, avatarUrl: u(47).avatarUrl, tier: u(47).tier, headline: u(47).headline, location: u(47).location },
+    ],
+    trustedHelpers: [
+      { id: u(46).id, fullName: u(46).fullName, avatarUrl: u(46).avatarUrl, tier: u(46).tier, openTo: u(46).openTo, headline: u(46).headline },
+      { id: u(47).id, fullName: u(47).fullName, avatarUrl: u(47).avatarUrl, tier: u(47).tier, openTo: u(47).openTo, headline: u(47).headline },
+    ],
+  },
+
+  {
+    id: 'h10',
+    slug: 'melbourne',
+    city: 'Melbourne',
+    country: 'Australia',
+    countryCode: 'AU',
+    lat: -37.813,
+    lng: 144.963,
+    memberCount: 134,
+    isActive: true,
+    topIndustries: ['Engineering', 'Healthcare', 'Trades'],
+    recentActivity: 'Hub BBQ coming up · 41 RSVP · Petre helped 4 newcomers this month',
+    description:
+      "Melbourne hosts one of the most established Macedonian communities in Australia. Strong in trades, engineering, and healthcare. The hub has a family-oriented, community-first culture rooted in decades of migration.",
+    focusTags: ['Trades', 'Engineering', 'Healthcare', 'Community', 'Immigration'],
+    ambassador: {
+      id: u(50).id,
+      fullName: u(50).fullName,
+      avatarUrl: u(50).avatarUrl,
+      headline: u(50).headline,
+      tier: u(50).tier,
+      role: 'City Ambassador',
+    },
+    activeHelpers: 11,
+    upcomingEventCount: 1,
+    opportunityCount: 3,
+    isJoined: false,
+    relocTips: [
+      {
+        id: 'rt21',
+        category: 'legal',
+        title: 'Australian skilled migration',
+        body: "The 189 and 190 skilled migration visas are the main pathways for professionals. Victoria's state nomination (190) regularly includes engineering and healthcare on the skilled occupation list.",
+      },
+      {
+        id: 'rt22',
+        category: 'community',
+        title: 'The Melbourne Macedonian community',
+        body: "Brunswick and Thomastown have the highest concentration of Macedonian families. The Macedonian Orthodox Church in Thomastown is a long-standing community anchor.",
+      },
+    ],
+    featuredMembers: [
+      { id: u(50).id, fullName: u(50).fullName, avatarUrl: u(50).avatarUrl, tier: u(50).tier, headline: u(50).headline, location: u(50).location },
+      { id: u(51).id, fullName: u(51).fullName, avatarUrl: u(51).avatarUrl, tier: u(51).tier, headline: u(51).headline, location: u(51).location },
+    ],
+    trustedHelpers: [
+      { id: u(50).id, fullName: u(50).fullName, avatarUrl: u(50).avatarUrl, tier: u(50).tier, openTo: u(50).openTo, headline: u(50).headline },
+      { id: u(51).id, fullName: u(51).fullName, avatarUrl: u(51).avatarUrl, tier: u(51).tier, openTo: u(51).openTo, headline: u(51).headline },
+    ],
+  },
+
+  {
+    id: 'h11',
+    slug: 'stockholm',
+    city: 'Stockholm',
+    country: 'Sweden',
+    countryCode: 'SE',
+    lat: 59.334,
+    lng: 18.063,
+    memberCount: 62,
+    isActive: true,
+    topIndustries: ['Tech', 'Music Tech', 'Fintech'],
+    recentActivity: 'Inaugural meetup this month · 19 RSVP · Nordic chapter launching',
+    description:
+      "Stockholm is emerging as a hub for Macedonian tech professionals drawn to Spotify, Klarna, IKEA, and the Scandinavian startup scene. Small but highly engaged — the inaugural meetup is this month.",
+    focusTags: ['Tech', 'Startups', 'Music Tech', 'Fintech', 'Nordic Life'],
+    ambassador: null,
+    activeHelpers: 4,
+    upcomingEventCount: 1,
+    opportunityCount: 2,
+    isJoined: false,
+    relocTips: [
+      {
+        id: 'rt23',
+        category: 'legal',
+        title: 'Swedish work permit',
+        body: "EU citizens can work freely. Non-EU nationals need a work permit — your employer applies before you arrive. The process is straightforward but takes 1-4 months.",
+      },
+      {
+        id: 'rt24',
+        category: 'banking',
+        title: 'Swedish banking and Swish',
+        body: "Revolut works well until you get a Swedish personnummer. Once registered, open a local account (Swedbank, Handelsbanken) to access Swish — the mobile payment system everyone uses.",
+      },
+    ],
+    featuredMembers: [
+      { id: u(54).id, fullName: u(54).fullName, avatarUrl: u(54).avatarUrl, tier: u(54).tier, headline: u(54).headline, location: u(54).location },
+      { id: u(55).id, fullName: u(55).fullName, avatarUrl: u(55).avatarUrl, tier: u(55).tier, headline: u(55).headline, location: u(55).location },
+    ],
+    trustedHelpers: [
+      { id: u(54).id, fullName: u(54).fullName, avatarUrl: u(54).avatarUrl, tier: u(54).tier, openTo: u(54).openTo, headline: u(54).headline },
+      { id: u(55).id, fullName: u(55).fullName, avatarUrl: u(55).avatarUrl, tier: u(55).tier, openTo: u(55).openTo, headline: u(55).headline },
+    ],
+  },
+
+  {
+    id: 'h12',
+    slug: 'skopje',
+    city: 'Skopje',
+    country: 'North Macedonia',
+    countryCode: 'MK',
+    lat: 41.997,
+    lng: 21.428,
+    memberCount: 48,
+    isActive: true,
+    topIndustries: ['Tech', 'Outsourcing', 'Education'],
+    recentActivity: 'Send-Off event coming up · 27 RSVP · 3 members planning to move abroad this year',
+    description:
+      "The Skopje hub is for professionals preparing to move abroad and those who have recently returned. A bridge between home and the diaspora — oriented around relocation support, pre-departure networking, and returning members.",
+    focusTags: ['Pre-Departure', 'Relocation', 'Tech', 'Career Abroad', 'Returners'],
+    ambassador: null,
+    activeHelpers: 3,
+    upcomingEventCount: 1,
+    opportunityCount: 1,
+    isJoined: false,
+    relocTips: [
+      {
+        id: 'rt25',
+        category: 'networking',
+        title: 'Preparing to move abroad',
+        body: "The diaspora network is most useful before you leave. Connect with hub members in your target city, attend a Send-Off event, and ask questions now — it's much harder to navigate from abroad without contacts.",
+      },
+    ],
+    featuredMembers: [
+      { id: u(58).id, fullName: u(58).fullName, avatarUrl: u(58).avatarUrl, tier: u(58).tier, headline: u(58).headline, location: u(58).location },
+      { id: u(59).id, fullName: u(59).fullName, avatarUrl: u(59).avatarUrl, tier: u(59).tier, headline: u(59).headline, location: u(59).location },
+    ],
+    trustedHelpers: [
+      { id: u(58).id, fullName: u(58).fullName, avatarUrl: u(58).avatarUrl, tier: u(58).tier, openTo: u(58).openTo, headline: u(58).headline },
+    ],
   },
 ]
