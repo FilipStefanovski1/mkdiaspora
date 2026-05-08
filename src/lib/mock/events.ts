@@ -1,0 +1,48 @@
+import type { DiasporaEvent } from '@/types'
+import { MOCK_USERS } from './users'
+
+export const MOCK_EVENTS: DiasporaEvent[] = [
+  {
+    id: 'ev1',
+    title: 'Diaspora Founders Night — Berlin',
+    description: 'An intimate evening for Macedonian founders and operators based in Germany. Hosted at Betahaus Berlin.',
+    type: 'in-person',
+    hub: { id: 'h1', city: 'Berlin', country: 'Germany' },
+    organizer: { id: MOCK_USERS[0].id, fullName: MOCK_USERS[0].fullName, avatarUrl: MOCK_USERS[0].avatarUrl },
+    date: '2024-10-25T18:00:00',
+    location: 'Betahaus, Prinzessinnenstraße 19-20, Berlin',
+    attendeeCount: 34,
+    maxAttendees: 50,
+    tags: ['Founders', 'Networking', 'Berlin'],
+    isPrivate: false,
+    createdAt: '2024-09-20',
+  },
+  {
+    id: 'ev2',
+    title: 'MK Tech Talks — Virtual',
+    description: 'Monthly virtual meetup featuring Macedonian engineers working at top global companies.',
+    type: 'virtual',
+    organizer: { id: MOCK_USERS[2].id, fullName: MOCK_USERS[2].fullName, avatarUrl: MOCK_USERS[2].avatarUrl },
+    date: '2024-11-01T17:00:00',
+    virtualLink: 'https://meet.google.com/xyz',
+    attendeeCount: 89,
+    tags: ['Tech', 'Engineering', 'Virtual'],
+    isPrivate: false,
+    createdAt: '2024-10-01',
+  },
+  {
+    id: 'ev3',
+    title: 'Diaspora Investor Breakfast — London',
+    description: 'Private breakfast for Macedonian investors and founders in London. Application required.',
+    type: 'in-person',
+    hub: { id: 'h2', city: 'London', country: 'United Kingdom' },
+    organizer: { id: MOCK_USERS[3].id, fullName: MOCK_USERS[3].fullName, avatarUrl: MOCK_USERS[3].avatarUrl },
+    date: '2024-11-08T08:30:00',
+    location: 'The Ned, 27 Poultry, London',
+    attendeeCount: 18,
+    maxAttendees: 25,
+    tags: ['Investors', 'Founders', 'Private', 'London'],
+    isPrivate: true,
+    createdAt: '2024-10-05',
+  },
+]
