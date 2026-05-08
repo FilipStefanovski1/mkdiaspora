@@ -9,4 +9,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    // GlobeView (Three.js + react-globe.gl) is lazy-loaded — suppress size warning
+    chunkSizeWarningLimit: 3000,
+  },
 })
